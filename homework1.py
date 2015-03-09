@@ -2,10 +2,10 @@
 
 from math import *
 
-Lambda = 1.0/100.0
-Mu = 1.0/2.0
-a = 100
-n = 5
+Lambda = 1.0/2.0
+Mu = 1.0/14.0
+a = Lambda/Mu
+n = 1
 P_reject_limit = 0.01
 
 
@@ -56,8 +56,11 @@ def get_n_avg_rel():
 ###########################################
 while get_p_reject() > P_reject_limit:
     n += 1
+print('Without queue:')
 print('P_rej={0:.3f} for reject limit {1:.2f} with n={2:d}'.format(get_p_reject(), P_reject_limit, n))
 print('N_avg={0:.2f}'.format(get_n_avg()))
 print('N_avg_rel={0:.1f} %'.format(get_n_avg_rel() * 100))
+
+print('\nLet\'s add a queue:')
 
 
