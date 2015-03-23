@@ -58,7 +58,9 @@ def solution_without_query(p, k, n, a, p_required):
     coef_p = probability_coefficient_calculation(a, n) 
     zero_p = zero_probability_calculation(coef_p)
     cur_p = probability_calculation(zero_p, coef_p)
-    
+
+    print('%d\t%f\t%f' % (n, zero_p, cur_p[n]))
+
     p.append(cur_p[n])
     k.append(efficiency_calculation(cur_p))
     if is_probability_correct(p[n], p_required):
@@ -99,6 +101,7 @@ def main(p_required, a):
     k_avg = []  # Среднее относительное число занятых каналов
     n = 0
 
+    print('n\tp(0)\t\tp(n)')
     while True:
         is_ok = solution_without_query(p, k, n, a, p_required)
         if is_ok:
@@ -115,18 +118,29 @@ def main(p_required, a):
     print('Для {0:d} каналов вероятность отказа равна {1:.3f} ( < {2:.3f}).'.format(n, p[n], p_required))
     print('При этом в среднем занято {0:.2f} каналов (или {1:.1f}%).'.format(k[n], k_avg[n]*100))
 
+    print('n\tk\t\t\tk_avg')
+    output_file = open('results.txt', 'w')
+    for i in range(1, len(k)):
+        print('%d\t%f\t%.3f' % (i, k[i], k_avg[i]*100))
+        output_file.write('%d\t%.3f\n' % (i, k_avg[i]*100))
+
+
     solution_with_query(q, a, k_query, n)
 
     print('\nСМО с очередью:')
     print('Cредняя длина очереди равна {1:.3f}.'.format(n, q[len(q)-1]))
     print('Среднее число занятых каналов равно {0:.2f}.'.format(k_query[len(k_query)-1]))
 
-    plt.plot(p, label="Вероятность отказа")
-    plt.plot(k, label="Среднее число занятых каналов")
-    plt.plot(range(n-len(q)+1, n+1), q, label="Средняя длина очереди")
-    plt.plot(range(n-len(k_query)+1, n+1), k_query, label="Среднее число занятых каналов с очередью")
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=1)
-    plt.show()
+    print('n\tk_query\tq')
+    for i in range(len(q)):
+        print('%d\t%.3f\t%.3f' % (i+1+n-len(q), k_query[i], q[i]))
+
+    # plt.plot(p, label="Вероятность отказа")
+    # plt.plot(k, label="Среднее число занятых каналов")
+    # plt.plot(range(n-len(q)+1, n+1), q, label="Средняя длина очереди")
+    # plt.plot(range(n-len(k_query)+1, n+1), k_query, label="Среднее число занятых каналов с очередью")
+    # plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=2)
+    # plt.show()
 
 l = 1.0 / 3.0
 m = 1.0 / 14.0

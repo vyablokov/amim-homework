@@ -52,10 +52,13 @@ def main(percentage, a, n):
     else:
         print("Слишком много станков")
 
-    plt.plot(range(1, 1+len(breaking_history)),
-             breaking_history, label="N_avg")
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3)
-    plt.show()
+    for i in range(len(breaking_history)):
+        print('%.3f' % (breaking_history[i]))
+
+    # plt.plot(range(1, 1+len(breaking_history)),
+    #          breaking_history, label="N_avg")
+    # plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3)
+    # plt.show()
 
 
 l = 1.0 / 67.0
@@ -63,4 +66,4 @@ m = 1.0 / 6.0
 a = l/m
 n = 13
 
-main(0.10, a, n)
+main(0.05, a, n)
